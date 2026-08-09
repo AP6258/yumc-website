@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>모래성 게임 | YUMC</title>
+  <style>
+    :root{color-scheme:light;--bg:#f3f6fb;--panel:#fff;--soft:#e9eff7;--fg:#111827;--muted:#5d6879;--line:#202b3d;--blue:#2e6fbd;--green:#68cf6f;--focus:#166534;--sand:#e0a84c;--danger:#b52f2f}
+    body.dark{color-scheme:dark;--bg:#0f1420;--panel:#171d29;--soft:#202a3a;--fg:#f5f7fb;--muted:#aeb8c8;--line:#dce5f2;--blue:#6ba8f0;--green:#79d77b;--focus:#79d77b;--sand:#efbd62;--danger:#ff8585}
+    *{box-sizing:border-box}html{scrollbar-gutter:stable}body{margin:0;background-color:var(--bg);background-image:linear-gradient(45deg,color-mix(in srgb,var(--blue) 7%,transparent) 25%,transparent 25%) 0 0/32px 32px,linear-gradient(45deg,transparent 75%,color-mix(in srgb,var(--blue) 7%,transparent) 75%) 0 0/32px 32px;color:var(--fg);font-family:Arial,"Noto Sans KR","Malgun Gothic",sans-serif;transition:background .2s,color .2s}button,select,a{font:inherit}button,select{color:inherit}a{color:inherit;text-decoration:none}
+    header{position:sticky;top:0;z-index:10;border-bottom:3px solid var(--blue);background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(16px)}.bar{max-width:1440px;height:76px;margin:auto;padding:0 clamp(20px,4vw,64px);display:flex;align-items:center;gap:34px}.brand{color:var(--green);font-size:27px;font-weight:800;letter-spacing:-1.5px}.brand span{color:var(--blue)}.nav{display:flex;align-items:stretch;height:100%;gap:4px;margin-left:auto}.nav a{display:flex;align-items:center;padding:0 12px;font-size:13px;font-weight:900}.nav a:hover,.nav a:focus-visible,.nav a[aria-current="page"]{color:var(--blue)}.mobile-menu{display:none;position:relative;margin-left:auto}.mobile-menu summary{min-height:44px;padding:10px 13px;border:2px solid var(--line);background:var(--panel);font-size:12px;font-weight:900;cursor:pointer;list-style:none}.mobile-menu summary::-webkit-details-marker{display:none}.mobile-menu nav{position:absolute;right:0;top:48px;width:190px;border:2px solid var(--line);background:var(--panel);box-shadow:5px 5px 0 var(--blue)}.mobile-menu nav a{min-height:44px;display:flex;align-items:center;padding:13px 15px;border-bottom:1px solid var(--line);font-size:12px;font-weight:900}.mobile-menu nav a:last-child{border-bottom:0}.theme{width:76px;min-height:44px;border:3px solid var(--line);background:var(--panel);font-size:10px;font-weight:900;cursor:pointer}
+    main{max-width:1200px;margin:auto;padding:64px 24px 90px}.eyebrow{display:block;margin-bottom:16px;color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.12em}h1{max-width:780px;margin:0;font-size:clamp(48px,8vw,88px);line-height:.92;letter-spacing:-.04em;word-break:keep-all}.intro{max-width:720px;margin:20px 0 0;color:var(--muted);font-size:17px;line-height:1.7;word-break:keep-all}.game-shell{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(0,1.2fr);margin-top:42px;border:3px solid var(--line);background:var(--panel);box-shadow:8px 8px 0 var(--blue)}.arena{min-height:560px;padding:34px;border-right:3px solid var(--line);display:flex;flex-direction:column;background:var(--soft)}.arena-head{display:flex;justify-content:space-between;align-items:center;gap:20px}.arena-head strong{font-size:14px}.game-label{font-size:12px;font-weight:900;color:var(--blue)}.castle-stage{position:relative;min-height:300px;margin:auto 0;display:grid;place-items:end center;overflow:hidden}.castle{position:relative;width:210px;height:180px;filter:drop-shadow(8px 8px 0 color-mix(in srgb,var(--line) 35%,transparent));transition:transform .25s,filter .25s}.castle::before{content:"";position:absolute;left:30px;right:30px;bottom:0;height:118px;background:var(--sand);clip-path:polygon(0 20%,16% 20%,16% 0,34% 0,34% 20%,66% 20%,66% 0,84% 0,84% 20%,100% 20%,100% 100%,0 100%)}.castle::after{content:"";position:absolute;left:84px;bottom:0;width:42px;height:62px;background:var(--soft);clip-path:polygon(50% 0,100% 22%,100% 100%,0 100%,0 22%)}.castle.crumble{animation:crumble .55s both}.sand-pile{position:absolute;bottom:0;width:280px;height:26px;background:color-mix(in srgb,var(--sand) 74%,transparent);clip-path:polygon(0 100%,12% 45%,28% 62%,45% 20%,63% 55%,82% 34%,100% 100%)}.dig-count{position:absolute;top:24px;right:16px;color:var(--blue);font-size:62px;font-weight:900;line-height:1}.dig-count small{display:block;color:var(--muted);font-size:11px;letter-spacing:.08em;text-align:right}
+    .console{min-width:0;padding:34px}.setup label{display:block;margin-bottom:10px;font-size:14px;font-weight:900}.setup-row{display:flex;gap:12px}.setup select{min-height:50px;min-width:150px;padding:0 14px;border:3px solid var(--line);background:var(--bg);font-weight:900}.status{min-height:96px;margin-top:24px;padding:18px;border:2px solid var(--line);background:var(--soft);display:flex;align-items:center;line-height:1.65;font-weight:900;white-space:pre-line}.status[data-tone="danger"]{border-color:var(--danger);color:var(--danger)}.status[data-tone="success"]{border-color:var(--green)}.turn-info{display:grid;grid-template-columns:1fr 1fr;margin-top:14px;border:2px solid var(--line)}.turn-info div{padding:14px}.turn-info div+div{border-left:2px solid var(--line)}.turn-info span{display:block;color:var(--muted);font-size:11px;font-weight:900}.turn-info strong{display:block;margin-top:5px;font-size:15px}.controls{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}.button{position:relative;z-index:0;min-height:50px;padding:0 20px;border:3px solid var(--line);background:var(--blue);color:#fff;font-weight:900;cursor:pointer;transition:transform .15s}.button.secondary{background:var(--panel);color:var(--fg)}.button.danger{background:var(--danger);color:#fff}.button::after,.theme::after,.mobile-menu summary::after{content:"";position:absolute;inset:0;z-index:-1;background:var(--line);transform:translate(4px,4px);clip-path:polygon(calc(100% - 4px) 0,100% 0,100% 100%,0 100%,0 calc(100% - 4px),calc(100% - 4px) calc(100% - 4px));transition:transform .15s}.theme,.mobile-menu summary{position:relative;z-index:0}.theme::after,.mobile-menu summary::after{background:var(--blue);transform:translate(3px,3px)}.button:hover:not(:disabled){transform:translate(3px,3px)}.button:hover:not(:disabled)::after{transform:translate(1px,1px)}.button:active:not(:disabled){transform:translate(4px,4px)}.button:active:not(:disabled)::after{transform:none}.button:disabled{cursor:not-allowed;opacity:.45}.rules{margin-top:26px;border-top:2px solid var(--line);padding-top:20px}.rules summary{cursor:pointer;font-weight:900}.rules ol{margin:16px 0 0;padding-left:22px;color:var(--muted);line-height:1.7}.rules li+li{margin-top:7px}footer{border-top:1px solid var(--line);padding:28px 24px;text-align:center;color:var(--muted);font-size:12px}
+    body.dark .button:not(.secondary){color:#08111e}.brand:focus-visible,.nav a:focus-visible,.mobile-menu summary:focus-visible,.mobile-menu nav a:focus-visible,.theme:focus-visible,.button:focus-visible,select:focus-visible,.rules summary:focus-visible{outline:3px solid var(--focus);outline-offset:3px}@keyframes crumble{20%{transform:rotate(-2deg)}45%{transform:rotate(3deg) translateY(6px)}100%{transform:translateY(190px) rotate(-8deg);opacity:0}}
+    @media(max-width:900px){.nav{display:none}.mobile-menu{display:block}.game-shell{grid-template-columns:1fr}.arena{min-height:430px;border-right:0;border-bottom:3px solid var(--line)}.castle-stage{min-height:250px}}@media(max-width:560px){.bar{height:68px}.game-shell{margin-top:32px}.arena,.console{padding:22px}.setup-row{align-items:stretch;flex-direction:column}.setup select,.setup-row .button{width:100%}.turn-info{grid-template-columns:1fr}.turn-info div+div{border-left:0;border-top:2px solid var(--line)}.controls{display:grid;grid-template-columns:1fr 1fr}.controls .button{padding:0 12px}.castle{transform:scale(.86)}.castle.crumble{animation:crumble .55s both}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.button,.button::after,.theme::after,.mobile-menu summary::after{transition:none}.button:hover:not(:disabled),.button:active:not(:disabled){transform:none}.castle.crumble{animation:none;opacity:.25}}
+  </style>
+</head>
+<body>
+  <header><div class="bar"><a class="brand" href="/" aria-label="YUMC 홈">YU<span>MC</span></a><nav class="nav" aria-label="주요 메뉴"><a href="info.html#about">동아리 소개</a><a href="info.html#activity">활동 내역</a><a href="info.html#officers">임원진</a><a href="info.html#location">동아리방 위치</a></nav><details class="mobile-menu"><summary>메뉴</summary><nav aria-label="모바일 메뉴"><a href="info.html#about">동아리 소개</a><a href="info.html#activity">활동 내역</a><a href="info.html#officers">임원진</a><a href="info.html#location">동아리방 위치</a></nav></details><button class="theme" type="button" aria-label="화면 테마 전환">DARK</button></div></header>
+  <main>
+    <span class="eyebrow">PLAY / MINI GAMES</span>
+    <h1>무너지기 전에<br>멈출 수 있을까?</h1>
+    <p class="intro">숫자의 차이가 모래성의 한계입니다. 시스템과 번갈아 모래를 덜고, 위험하다고 느끼면 포기하세요.</p>
+    <section class="game-shell" aria-label="혼자 하는 모래성 게임">
+      <div class="arena">
+        <div class="arena-head"><strong>모래성 상태</strong><span class="game-label" id="game-label">GAME 0</span></div>
+        <div class="castle-stage" aria-hidden="true">
+          <div class="dig-count"><small>덜어낸 횟수</small><span id="dig-count">0</span></div>
+          <div class="castle" id="castle"></div><div class="sand-pile"></div>
+        </div>
+      </div>
+      <div class="console">
+        <div class="setup">
+          <label for="secret-number">나의 비밀 숫자</label>
+          <div class="setup-row"><select id="secret-number"><option value="">1~10 중 선택</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><button class="button" id="start" type="button">게임 시작</button></div>
+        </div>
+        <div class="status" id="status" role="status" aria-live="polite">숫자를 고르면 시스템도 비밀 숫자를 정합니다.</div>
+        <div class="turn-info"><div><span>현재 차례</span><strong id="turn">대기 중</strong></div><div><span>시스템 숫자</span><strong id="system-number">비공개</strong></div></div>
+        <div class="controls"><button class="button danger" id="quit" type="button" disabled>포기하기</button><button class="button" id="dig" type="button" disabled>모래 덜기</button></div>
+        <details class="rules">
+          <summary>게임 규칙 보기</summary>
+          <ol><li>나와 시스템이 각각 1~10 중 숫자 하나를 비밀로 정합니다.</li><li>두 숫자의 차이만큼 안전하게 모래를 덜 수 있습니다.</li><li>차이를 초과해 덜면 모래성이 무너지고, 덜어낸 쪽이 패배합니다.</li><li>한쪽이 포기하면 상대가 포기하거나 마지막으로 한 번 더 덜 수 있습니다. 둘 다 포기하면 먼저 포기한 쪽이 패배합니다.</li></ol>
+        </details>
+      </div>
+    </section>
+  </main>
+  <footer>YUMC · 영남대학교 IT 학술 동아리</footer>
+  <script>
+    const body=document.body,theme=document.querySelector('.theme'),numberInput=document.querySelector('#secret-number'),startButton=document.querySelector('#start'),quitButton=document.querySelector('#quit'),digButton=document.querySelector('#dig'),statusBox=document.querySelector('#status'),turnText=document.querySelector('#turn'),systemNumberText=document.querySelector('#system-number'),digCountText=document.querySelector('#dig-count'),castle=document.querySelector('#castle'),gameText=document.querySelector('#game-label');
+    const updateTheme=()=>{const dark=body.classList.contains('dark');theme.textContent=dark?'화이트':'블랙';theme.setAttribute('aria-label',dark?'화이트 모드로 전환':'블랙 모드로 전환')};
+    body.classList.toggle('dark',localStorage.getItem('yumc-theme')!=='light');updateTheme();
+    theme.onclick=()=>{body.classList.toggle('dark');localStorage.setItem('yumc-theme',body.classList.contains('dark')?'dark':'light');updateTheme()};
+
+    let playerNumber=0,systemNumber=0,limit=0,digs=0,game=0,state='idle',turn='',token=0;
+    const randomNumber=()=>Math.floor(Math.random()*10)+1;
+    const randomAction=()=>Math.random()<.5?'quit':'dig';
+    const setControls=enabled=>{quitButton.disabled=!enabled;digButton.disabled=!enabled};
+    const setStatus=(text,tone='')=>{statusBox.textContent=text;statusBox.dataset.tone=tone};
+    const finish=(won,message)=>{state='ended';token++;setControls(false);systemNumberText.textContent=systemNumber+' · 한계 '+limit+'회';turnText.textContent='게임 종료';setStatus((won?'승리! ':'패배! ')+message+'\n새 게임을 시작할 수 있습니다.',won?'success':'danger');startButton.textContent='새 게임';startButton.disabled=false;numberInput.disabled=false};
+    const collapse=actor=>{castle.classList.add('crumble');finish(actor==='system',actor==='player'?'모래성을 무너뜨렸습니다.':'시스템이 모래성을 무너뜨렸습니다.')};
+    const dig=(actor,finalAttempt=false)=>{digs++;digCountText.textContent=digs;if(digs>limit){collapse(actor);return false}if(finalAttempt){finish(actor==='player',actor==='player'?'마지막 모래 덜기에 성공했습니다.':'시스템이 마지막 모래 덜기에 성공했습니다.');return false}return true};
+    const bothQuit=firstQuitter=>finish(firstQuitter==='system',firstQuitter==='system'?'시스템이 먼저 포기했습니다.':'내가 먼저 포기했습니다.');
+    const scheduleSystem=(finalAttempt=false)=>{
+      state=finalAttempt?'system-final':'system';turn='system';turnText.textContent=finalAttempt?'시스템의 마지막 선택':'시스템';setControls(false);setStatus(finalAttempt?'시스템이 포기할지 마지막으로 덜지 고르는 중입니다.':'시스템이 행동을 고르는 중입니다.');
+      const currentToken=token;setTimeout(()=>{if(currentToken!==token)return;const action=randomAction();if(action==='quit'){if(finalAttempt)bothQuit('player');else{state='player-final';turn='player';turnText.textContent='나의 마지막 선택';setControls(true);setStatus('시스템이 포기했습니다. 포기하면 승리합니다. 마지막으로 덜다 무너지면 패배합니다.')}}else{setStatus('시스템이 모래를 한 번 덜었습니다.');if(dig('system',finalAttempt)){state='player';turn='player';turnText.textContent='나';setControls(true);setStatus('내 차례입니다. 포기하거나 모래를 덜어보세요.')}}},650);
+    };
+    const startRound=()=>{
+      const selected=Number(numberInput.value);if(!selected){setStatus('먼저 1~10 중 나의 비밀 숫자를 골라주세요.','danger');numberInput.focus();return}
+      token++;game++;playerNumber=selected;systemNumber=randomNumber();limit=Math.abs(playerNumber-systemNumber);digs=0;state='playing';castle.classList.remove('crumble');void castle.offsetWidth;digCountText.textContent='0';gameText.textContent='GAME '+game;systemNumberText.textContent='비공개';numberInput.disabled=true;startButton.textContent='진행 중';startButton.disabled=true;setControls(false);
+      if(Math.random()<.5){turn='player';state='player';turnText.textContent='나';setControls(true);setStatus('내가 선공입니다. 포기하거나 모래를 덜어보세요.')}else{scheduleSystem()}
+    };
+    startButton.onclick=startRound;
+    digButton.onclick=()=>{if(turn!=='player'||!['player','player-final'].includes(state))return;const finalAttempt=state==='player-final';setControls(false);if(dig('player',finalAttempt)){setStatus('내가 모래를 한 번 덜었습니다.');scheduleSystem()}};
+    quitButton.onclick=()=>{if(turn!=='player'||!['player','player-final'].includes(state))return;if(state==='player-final'){bothQuit('system');return}setControls(false);setStatus('내가 포기했습니다. 시스템에게 마지막 선택권이 넘어갑니다.');scheduleSystem(true)};
+
+    console.assert(Math.abs(3-9)===6&&Math.abs(7-7)===0,'모래성 한계 계산 오류');
+  </script>
+</body>
+</html>

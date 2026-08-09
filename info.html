@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>YUMC</title>
+  <style>
+    :root{color-scheme:light;--bg:#f3f6fb;--fg:#111827;--muted:#5d6879;--line:#202b3d;--panel:#fff;--accent:#2e6fbd;--lime:#68cf6f;--soft:#e9eff7;--shadow:8px 8px 0 #2e6fbd}
+    body.dark{color-scheme:dark;--bg:#0f1420;--fg:#f5f7fb;--muted:#aeb8c8;--line:#dce5f2;--panel:#171d29;--accent:#6ba8f0;--lime:#79d77b;--soft:#202a3a;--shadow:8px 8px 0 #6ba8f0}
+    *{box-sizing:border-box}html{scrollbar-gutter:stable}body{margin:0;background-color:var(--bg);background-image:linear-gradient(45deg,color-mix(in srgb,var(--accent) 7%,transparent) 25%,transparent 25%) 0 0/32px 32px,linear-gradient(45deg,transparent 75%,color-mix(in srgb,var(--accent) 7%,transparent) 75%) 0 0/32px 32px;color:var(--fg);font-family:Arial,"Noto Sans KR","Malgun Gothic",sans-serif}a{color:inherit;text-decoration:none}header{position:sticky;top:0;z-index:10;border-bottom:3px solid var(--accent);background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(16px)}.bar{height:76px;max-width:1440px;margin:auto;padding:0 clamp(20px,4vw,64px);display:flex;align-items:center;gap:28px}.brand{color:var(--lime);font-size:30px;font-weight:950;letter-spacing:-2px}.brand span{color:var(--accent)}.subnav{display:flex;gap:20px;margin-left:auto}.subnav a{font-size:12px;font-weight:900}.subnav a:hover{color:var(--accent)}.home{padding:9px 14px;border:3px solid var(--line);font-size:12px;font-weight:900;box-shadow:3px 3px 0 var(--accent)}
+    main{max-width:1200px;min-height:540px;margin:auto;padding:clamp(40px,4vw,56px) clamp(20px,4vw,64px)}.page{display:none}.page.active{display:block}.kicker{display:inline-block;padding:8px 10px;background:var(--lime);color:#11220d;font-size:12px;font-weight:900;letter-spacing:.14em}h1{margin:24px 0 30px;font-family:inherit;font-size:clamp(54px,8vw,104px);font-weight:800;line-height:.95;letter-spacing:-.07em;text-shadow:none}.lead{max-width:760px;color:var(--muted);font-size:clamp(17px,2vw,21px);line-height:1.75}
+    .box{margin-top:42px;padding:30px;border:3px solid var(--line);background:var(--panel);box-shadow:6px 6px 0 var(--accent)}.box h2{margin:0 0 16px;font-size:23px}.box p,.box li{color:var(--muted);line-height:1.75}.box ul{margin:0;padding-left:20px}.link{display:inline-block;margin-top:16px;color:var(--accent);font-weight:900;text-decoration:underline;text-underline-offset:4px}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:36px}.card{min-height:220px;padding:26px;border:3px solid var(--line);background:var(--panel);box-shadow:5px 5px 0 var(--accent);transition:.15s}.card:hover{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--lime)}.card h2{margin:0 0 14px;font-size:24px}.card p{margin:0;color:var(--muted);line-height:1.7}.activity-groups{display:grid;gap:28px;margin-top:36px}.activity-group{border:3px solid var(--line);background:var(--panel);box-shadow:5px 5px 0 var(--accent)}.activity-group h2{margin:0;padding:18px 20px;border-bottom:2px solid var(--line);font-size:24px}.activity-group h2 span{margin-left:8px;color:var(--muted);font-size:12px;font-weight:700}.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:18px}.photo-card{margin:0;border:2px solid var(--line);background:var(--soft);overflow:hidden}.gallery-trigger{cursor:pointer}.gallery-trigger:hover,.gallery-trigger:focus{outline:3px solid var(--lime);outline-offset:2px}.photo-card img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-bottom:2px solid var(--line)}.photo-card figcaption{padding:11px 12px;font-size:14px;font-weight:900}.photo-card small{display:block;margin-top:4px;color:var(--muted);font-size:11px;font-weight:700}.photo-more{display:none}.gallery-dialog{width:min(94vw,1100px);max-width:1100px;padding:0;border:3px solid var(--line);background:var(--panel);color:var(--fg);box-shadow:8px 8px 0 var(--accent)}.gallery-dialog::backdrop{background:#000c}.gallery-stage{position:relative;padding:18px}.gallery-stage img{display:block;width:100%;max-height:72vh;object-fit:contain;background:#05070c}.gallery-title{display:flex;justify-content:space-between;gap:16px;padding:14px 4px 0;font-size:16px;font-weight:900}.gallery-title span{color:var(--muted);font-size:13px}.gallery-close,.gallery-nav{position:absolute;z-index:1;display:grid;place-items:center;border:2px solid var(--line);background:var(--panel);color:var(--fg);font-weight:900;cursor:pointer}.gallery-close{top:28px;right:28px;width:38px;height:38px}.gallery-nav{top:50%;width:48px;height:58px;font-size:28px;transform:translateY(-50%)}.gallery-prev{left:28px}.gallery-next{right:28px}.gallery-close:hover,.gallery-nav:hover{background:var(--accent);color:#fff}.theme{width:60px;height:38px;border:3px solid var(--line);background:var(--panel);color:var(--fg);font-size:10px;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 var(--accent)}
+    .kicker{font-size:0}.kicker::after{font-size:12px}.page[data-page="about"] .kicker::after{content:"01 / 소개"}.page[data-page="activity"] .kicker::after{content:"02 / 활동"}.page[data-page="officers"] .kicker::after{content:"03 / 임원진"}.page[data-page="location"] .kicker::after{content:"04 / 위치"}
+    @media(max-width:800px){.subnav{display:none}.grid{grid-template-columns:1fr}.photo-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.bar{height:68px;padding:0 16px}.home{margin-left:auto}main{padding:60px 16px}.box,.card{padding:22px}.photo-grid{grid-template-columns:1fr;padding:14px}.gallery-stage{padding:10px}.gallery-nav{top:auto;bottom:58px;transform:none}.gallery-prev{left:18px}.gallery-next{right:18px}.gallery-close{top:20px;right:20px}}
+    /* 사진 비율에 맞춰 창을 만들고, 버튼은 사진 영역의 정중앙에 둡니다. */
+    .gallery-dialog{width:fit-content;max-width:94vw}
+    .gallery-stage{padding:24px}
+    .gallery-media{position:relative;background:#05070c}
+    .gallery-stage img{display:block;width:auto;max-width:calc(94vw - 54px);max-height:72vh;height:auto}
+    .gallery-title{padding:14px 0 0}
+    .gallery-close,.gallery-nav{padding:0;line-height:1}
+    .gallery-close{top:16px;right:16px;font-size:24px}
+    .gallery-prev{left:16px}.gallery-next{right:16px}
+    .gallery-nav,.gallery-close{font-size:0}
+    .gallery-nav::before{content:"";width:12px;height:12px;border-top:3px solid currentColor;border-right:3px solid currentColor;transform:translateX(-3px) rotate(45deg)}
+    .gallery-prev::before{transform:translateX(3px) rotate(-135deg)}
+    .gallery-close::before,.gallery-close::after{content:"";position:absolute;top:50%;left:50%;width:16px;height:3px;background:currentColor}
+    .gallery-close::before{transform:translate(-50%,-50%) rotate(45deg)}
+    .gallery-close::after{transform:translate(-50%,-50%) rotate(-45deg)}
+    .gallery-nav{font-family:Arial,sans-serif;font-size:32px;line-height:1}
+    .gallery-close{font-family:Arial,sans-serif;font-size:25px;line-height:1}
+    .gallery-nav::before,.gallery-close::before,.gallery-close::after{content:none}
+    @media(max-width:520px){.gallery-stage{padding:12px}.gallery-stage img{max-width:calc(94vw - 30px)}.gallery-nav{top:50%;bottom:auto;transform:translateY(-50%)}.gallery-prev{left:10px}.gallery-next{right:10px}.gallery-close{top:10px;right:10px}}
+    .gallery-nav::before{content:none!important}
+    .gallery-nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-linecap:square;stroke-linejoin:miter;stroke-width:2.6}
+    .gallery-dialog{width:min(94vw,1280px)}
+    .gallery-media{width:100%;height:min(72vh,calc((94vw - 54px) * .5625))}
+    .gallery-stage img{width:100%;max-width:none;height:100%;max-height:none;object-fit:contain}
+    .activity-group h2 span{display:none}
+    .theme{display:block;width:76px;white-space:nowrap;transition:transform .15s,box-shadow .15s}.theme:hover,.theme:focus{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--lime);outline:none}
+    .role-board{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin:34px 0;border:3px solid var(--line);padding:14px;background:var(--panel);box-shadow:5px 5px 0 var(--accent)}
+    .role-board span{display:grid;align-content:center;gap:6px;min-height:72px;padding:8px;border:2px solid var(--line);background:var(--soft);text-align:center;font-size:13px;font-weight:900}.role-board b{color:var(--accent);font-size:11px}.role-board small{font-size:12px;line-height:1.4}
+    @media(max-width:800px){.role-board{grid-template-columns:repeat(3,1fr)}}
+    .officer-layout{display:grid;gap:18px;margin:34px 0}.officer-section{border:3px solid var(--line);padding:16px;background:var(--panel);box-shadow:5px 5px 0 var(--accent)}.officer-section h2{margin:0 0 12px;color:var(--accent);font-size:13px;letter-spacing:.08em}.officer-layout .role-board{margin:0;padding:0;border:0;box-shadow:none;grid-template-columns:repeat(4,1fr)}.officer-layout .role-board.core{grid-template-columns:repeat(3,1fr)}.officer-layout .role-board span{min-height:78px}@media(max-width:800px){.officer-layout .role-board,.officer-layout .role-board.core{grid-template-columns:repeat(2,1fr)}}
+    .officer-directory{margin:34px 0;border:3px solid var(--line);background:var(--panel);box-shadow:5px 5px 0 var(--accent)}.officer-directory div{display:grid;grid-template-columns:150px 1fr;min-height:58px;border-bottom:2px solid var(--line)}.officer-directory div:last-child{border-bottom:0}.officer-directory b,.officer-directory span{display:flex;align-items:center;padding:12px 18px}.officer-directory b{border-right:2px solid var(--line);color:var(--accent);font-size:14px}.officer-directory span{font-size:15px;font-weight:900;line-height:1.5}.officer-directory .directory-head{min-height:42px;background:var(--soft);font-size:11px;font-weight:900}.officer-directory .directory-head span{color:var(--muted);font-size:11px}.officer-directory .directory-head span:first-child{border-right:2px solid var(--line)}@media(max-width:520px){.officer-directory div{grid-template-columns:96px 1fr}.officer-directory b,.officer-directory span{padding:10px 12px;font-size:13px}}
+    .org-chart{display:grid;justify-items:center;margin:34px 0}.org-row{display:grid;gap:14px;position:relative}.org-row.core{grid-template-columns:repeat(2,minmax(190px,1fr))}.org-row.teams{grid-template-columns:repeat(4,minmax(0,1fr));width:100%;padding-top:26px}.org-row.teams::before{content:"";position:absolute;top:0;left:12.5%;right:12.5%;border-top:2px solid var(--accent)}.org-row.teams::after{content:"";position:absolute;top:-26px;left:50%;height:26px;border-left:2px solid var(--accent)}.org-row.teams .org-node::before{content:"";position:absolute;top:-26px;left:50%;height:26px;border-left:2px solid var(--accent)}.org-link{height:26px;border-left:2px solid var(--accent)}.org-node{position:relative;min-width:180px;padding:16px 18px;border:3px solid var(--line);background:var(--panel);box-shadow:5px 5px 0 var(--accent);text-align:center}.org-node b{display:block;margin-bottom:7px;color:var(--accent);font-size:12px}.org-node span{font-size:14px;font-weight:900;line-height:1.5}.org-row.teams .org-node{min-width:0}@media(max-width:800px){.org-row.teams{grid-template-columns:repeat(2,1fr)}.org-row.teams::before,.org-row.teams::after,.org-row.teams .org-node::before{display:none}.org-row.teams{padding-top:0}.org-node{min-width:0}}
+    .org-chart>.org-node{width:190px}.org-row.core::before{content:"";position:absolute;top:0;left:25%;right:25%;border-top:2px solid var(--accent)}
+    .org-row.core,.org-row.teams{padding-top:26px}.org-row.core::before,.org-row.teams::before{top:0;left:var(--line-left);right:var(--line-right)}.org-row.core .org-node::before,.org-row.teams .org-node::before{content:"";position:absolute;top:-26px;left:50%;height:26px;border-left:2px solid var(--accent)}.org-row.teams::after{content:none}
+    .org-link{width:2px;border:0;background:var(--accent)}.org-row.core::before,.org-row.teams::before{border:0;height:2px;background:var(--accent);left:calc(var(--line-left) - 1px);right:calc(var(--line-right) - 1px)}.org-row.core .org-node::before,.org-row.teams .org-node::before{width:2px;border:0;background:var(--accent);left:calc(50% - 1px)}
+    .org-row.teams::before{left:calc((100% - 42px) / 8 - 1px)!important;right:calc((100% - 42px) / 8 - 1px)!important}
+    .org-row.teams{grid-template-columns:repeat(5,minmax(0,1fr))}.org-row.teams::before{left:calc((100% - 56px) / 10 - 1px)!important;right:calc((100% - 56px) / 10 - 1px)!important}
+    .org-row.teams .org-node::before{height:22px!important}
+    .settlement-card{grid-column:1/-1;max-width:360px}.settlement-card img{aspect-ratio:1/1;object-fit:cover}
+    @keyframes card-rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:no-preference){.page.active .photo-card{animation:card-rise .42s ease-out both}.page.active .photo-card:nth-child(2){animation-delay:.07s}.page.active .photo-card:nth-child(3){animation-delay:.14s}.page.active .photo-card:nth-child(4){animation-delay:.21s}.page.active .photo-card:nth-child(5){animation-delay:.28s}}
+    .brand{font-family:Arial,sans-serif;font-size:27px;font-weight:800;letter-spacing:-1.5px}
+    .org-chart{padding:36px 28px 30px;border:3px solid var(--line);background:var(--panel);box-shadow:8px 8px 0 var(--accent)}.org-node{box-shadow:none}.org-row.teams::after{content:none}.org-row.teams .org-node::before{top:-28px;height:24px!important}.org-row.teams{grid-template-columns:repeat(6,minmax(0,1fr))}.org-row.teams::before{left:calc(var(--line-left) - 1px)!important;right:calc(var(--line-right) - 1px)!important}.org-row.teams .org-node:nth-child(4){grid-column:span 2;padding-inline:16px}.org-row.teams .org-node:nth-child(4) span{font-size:14px;line-height:1.5;word-break:keep-all}.kicker,.theme,.org-node b,.role-board b,.photo-card small,.activity-group h2 span{font-family:Consolas,monospace}@media(max-width:800px){.org-row.teams{grid-template-columns:repeat(2,minmax(0,1fr))}.org-row.teams .org-node:nth-child(4){grid-column:1/-1}.org-row.teams::before,.org-row.teams .org-node::before{display:none}}@media(max-width:520px){.org-row.teams{grid-template-columns:1fr}.org-row.teams .org-node:nth-child(4){grid-column:auto}}
+    .org-row.teams .org-node::before{top:-28px;height:27px!important;background:linear-gradient(to bottom,var(--accent) 0 calc(100% - 2px),var(--line) calc(100% - 2px) 100%)}
+    .bar{height:76px;max-width:1440px;padding:0 clamp(20px,4vw,64px);gap:34px}.nav{display:flex;align-items:stretch;height:100%;gap:4px;margin-left:auto}.nav a{display:flex;align-items:center;padding:0 12px;font-size:13px;font-weight:900}.nav a:hover,.nav a:focus{color:var(--accent)}.mobile-menu{display:none;position:relative;margin-left:auto}.mobile-menu summary{padding:10px 13px;border:2px solid var(--line);background:var(--panel);font:900 12px Consolas,monospace;cursor:pointer;list-style:none}.mobile-menu summary::-webkit-details-marker{display:none}.mobile-menu nav{position:absolute;right:0;top:48px;width:190px;border:2px solid var(--line);background:var(--panel);box-shadow:5px 5px 0 var(--accent)}.mobile-menu nav a{display:block;padding:13px 15px;border-bottom:1px solid var(--line);font-size:12px;font-weight:900}.mobile-menu nav a:last-child{border-bottom:0}@media(max-width:900px){.nav{display:none}.mobile-menu{display:block}}@media(max-width:560px){.bar{height:68px;padding:0 clamp(20px,4vw,64px)}}
+    body,header,.page,.box,.card,.activity-group,.photo-card,.gallery-dialog,.org-chart,.org-node,.home{transition:background-color .2s,border-color .2s,color .2s,box-shadow .2s}.theme{transition:transform .15s,background-color .2s,border-color .2s,color .2s,box-shadow .2s}
+    .theme:focus:not(:focus-visible):not(:hover){transform:none;box-shadow:3px 3px 0 var(--accent)}
+    .settlement-tablist{display:flex;gap:10px;margin-top:28px}.settlement-tab{padding:12px 20px;border:3px solid var(--line);background:var(--panel);color:var(--fg);font-weight:900;cursor:pointer;box-shadow:4px 4px 0 var(--accent)}.settlement-tab:hover,.settlement-tab.active{background:var(--accent);color:#fff;transform:translate(2px,2px);box-shadow:2px 2px 0 var(--lime)}.settlement-tabs>.settlement-group{margin-top:18px}
+    /* Canonical header and tactile controls */
+    .bar{height:76px;max-width:1440px;margin:auto;padding:0 clamp(20px,4vw,64px);gap:34px}
+    .brand{font:800 27px Arial,sans-serif;letter-spacing:-1.5px}
+    .theme{width:76px;height:44px;min-height:44px}
+    .mobile-menu summary{min-height:44px;display:flex;align-items:center}
+    .mobile-menu nav a{min-height:44px;display:flex;align-items:center}
+    .theme,.mobile-menu summary,.settlement-tab{position:relative;z-index:0;box-shadow:none!important;transition:transform .15s cubic-bezier(.16,1,.3,1),background-color .2s,border-color .2s,color .2s}
+    .theme::after,.mobile-menu summary::after,.settlement-tab::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--accent);pointer-events:none;clip-path:polygon(calc(100% - var(--shadow-gap)) 0,100% 0,100% 100%,0 100%,0 calc(100% - var(--shadow-gap)),calc(100% - var(--shadow-gap)) calc(100% - var(--shadow-gap)));transition:transform .15s cubic-bezier(.16,1,.3,1),clip-path .15s cubic-bezier(.16,1,.3,1)}
+    .theme::after,.mobile-menu summary::after{--shadow-gap:3px;transform:translate(var(--shadow-gap),var(--shadow-gap))}
+    .settlement-tab::after{--shadow-gap:4px;transform:translate(var(--shadow-gap),var(--shadow-gap))}
+    .theme:hover,.mobile-menu summary:hover,.settlement-tab:hover,.settlement-tab.active{transform:translate(2px,2px)}
+    .theme:hover::after,.mobile-menu summary:hover::after{--shadow-gap:1px;transform:translate(var(--shadow-gap),var(--shadow-gap))}
+    .settlement-tab:hover::after,.settlement-tab.active::after{--shadow-gap:2px;transform:translate(var(--shadow-gap),var(--shadow-gap))}
+    .theme:active,.mobile-menu summary:active{transform:translate(3px,3px)}
+    .theme:active::after,.mobile-menu summary:active::after{--shadow-gap:0px;transform:none}
+    .settlement-tab:active{transform:translate(4px,4px)}
+    .settlement-tab:active::after{--shadow-gap:0px;transform:none}
+    .brand:focus-visible,.nav a:focus-visible,.mobile-menu summary:focus-visible,.mobile-menu nav a:focus-visible,.theme:focus-visible,.settlement-tab:focus-visible,.gallery-trigger:focus-visible,.gallery-close:focus-visible,.gallery-nav:focus-visible{outline:3px solid var(--fg);outline-offset:3px}
+    .theme:focus-visible:not(:hover),.mobile-menu summary:focus-visible:not(:hover),.settlement-tab:focus-visible:not(:hover){transform:none}
+    @supports not (scrollbar-gutter:stable){html{overflow-y:scroll}}
+    @media(max-width:560px){.bar{height:68px;padding:0 clamp(20px,4vw,64px)}}
+    @media(prefers-reduced-motion:reduce){.theme,.mobile-menu summary,.settlement-tab,.theme::after,.mobile-menu summary::after,.settlement-tab::after{transition:none}.theme:hover,.theme:active,.mobile-menu summary:hover,.mobile-menu summary:active,.settlement-tab:hover,.settlement-tab:active{transform:none}.theme:hover::after,.theme:active::after,.mobile-menu summary:hover::after,.mobile-menu summary:active::after{--shadow-gap:3px;transform:translate(3px,3px)}.settlement-tab:hover::after,.settlement-tab:active::after{--shadow-gap:4px;transform:translate(4px,4px)}}
+</style>
+</head>
+<body>
+  <header><div class="bar"><a class="brand" href="/" aria-label="YUMC &#xD648;">YU<span>MC</span></a><nav class="nav" aria-label="주요 메뉴"><a href="#about">동아리 소개</a><a href="#activity">활동 내역</a><a href="#officers">임원진</a><a href="#location">동아리방 위치</a></nav><details class="mobile-menu"><summary>메뉴</summary><nav aria-label="모바일 메뉴"><a href="#about">동아리 소개</a><a href="#activity">활동 내역</a><a href="#officers">임원진</a><a href="#location">동아리방 위치</a></nav></details><button class="theme" type="button" aria-label="&#xD654;&#xBA74; &#xD14C;&#xB9C8; &#xC804;&#xD658;">DARK</button></div></header>
+  <main>
+    <section class="page" data-page="about">
+      <div class="kicker">01 / 소개</div>
+      <h1>동아리 소개</h1>
+      <p class="lead">안녕하세요. 영남대학교 IT 학술 동아리 YUMC입니다.</p>
+      <div class="box">
+        <p>YUMC는 2020년 소모임으로 시작해 메타버스 캠퍼스 구축 활동을 진행했으며, 2023년 중앙동아리로 정식 등록되었습니다. 이후 다양한 대외 언론 보도와 영남대학교 협업을 바탕으로 활동을 이어오며, 기초부터 심화까지 함께 배우는 IT 학술 동아리로 성장하고 있습니다.</p>
+        <p>YUMC는 영남대학교 중앙동아리에서 IT 분야를 다루는 학술 동아리입니다. 교내 지원을 바탕으로 마인크래프트 서버를 운영하고, 코딩 스터디와 프로젝트, 친목 활동, 소소한 이벤트를 통해 다양한 학우와 즐겁게 교류합니다.</p>
+        <h2>YUMC에서 하는 일</h2>
+        <ul><li>마인크래프트 자체 서버 운영</li><li>코딩 강의와 IT 스터디</li><li>메타버스·해커톤·게임잼 등 대외활동</li><li>동아리원 간 친목활동</li></ul>
+      </div>
+    </section>
+    <section class="page" data-page="activity">
+      <div class="kicker">02 / 활동</div>
+      <h1>활동 내역</h1>
+      <div class="activity-groups">
+        <section class="activity-group"><h2>마인크래프트 서버 운영 <span>사진 이름별 정리</span></h2><div class="photo-grid">
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/영대서버.png" alt="영대 서버"><figcaption>영대 서버<small>영대서버 · 영대서버2~7</small></figcaption></figure>
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/RPG서버.png" alt="RPG 서버"><figcaption>RPG 서버<small>RPG서버 · RPG서버2~4</small></figcaption></figure>
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/포켓몬서버.png" alt="포켓몬 서버"><figcaption>포켓몬 서버<small>포켓몬서버 · 포켓몬서버2~5</small></figcaption></figure>
+        </div><details class="photo-more"><summary>추가 사진 보기 · 13장</summary><div class="photo-grid">
+          <figure class="photo-card"><a href="assets/activity/영대서버2.png" target="_blank"><img loading="lazy" src="assets/activity/영대서버2.png" alt="영대서버2"></a><figcaption>영대서버2</figcaption></figure><figure class="photo-card"><a href="assets/activity/영대서버3.png" target="_blank"><img loading="lazy" src="assets/activity/영대서버3.png" alt="영대서버3"></a><figcaption>영대서버3</figcaption></figure><figure class="photo-card"><a href="assets/activity/영대서버4.png" target="_blank"><img loading="lazy" src="assets/activity/영대서버4.png" alt="영대서버4"></a><figcaption>영대서버4</figcaption></figure><figure class="photo-card"><a href="assets/activity/영대서버5.png" target="_blank"><img loading="lazy" src="assets/activity/영대서버5.png" alt="영대서버5"></a><figcaption>영대서버5</figcaption></figure><figure class="photo-card"><a href="assets/activity/영대서버6.png" target="_blank"><img loading="lazy" src="assets/activity/영대서버6.png" alt="영대서버6"></a><figcaption>영대서버6</figcaption></figure><figure class="photo-card"><a href="assets/activity/영대서버7.png" target="_blank"><img loading="lazy" src="assets/activity/영대서버7.png" alt="영대서버7"></a><figcaption>영대서버7</figcaption></figure>
+          <figure class="photo-card"><a href="assets/activity/RPG서버2.png" target="_blank"><img loading="lazy" src="assets/activity/RPG서버2.png" alt="RPG서버2"></a><figcaption>RPG서버2</figcaption></figure><figure class="photo-card"><a href="assets/activity/RPG서버3.png" target="_blank"><img loading="lazy" src="assets/activity/RPG서버3.png" alt="RPG서버3"></a><figcaption>RPG서버3</figcaption></figure><figure class="photo-card"><a href="assets/activity/RPG서버4.png" target="_blank"><img loading="lazy" src="assets/activity/RPG서버4.png" alt="RPG서버4"></a><figcaption>RPG서버4</figcaption></figure>
+          <figure class="photo-card"><a href="assets/activity/포켓몬서버2.png" target="_blank"><img loading="lazy" src="assets/activity/포켓몬서버2.png" alt="포켓몬서버2"></a><figcaption>포켓몬서버2</figcaption></figure><figure class="photo-card"><a href="assets/activity/포켓몬서버3.png" target="_blank"><img loading="lazy" src="assets/activity/포켓몬서버3.png" alt="포켓몬서버3"></a><figcaption>포켓몬서버3</figcaption></figure><figure class="photo-card"><a href="assets/activity/포켓몬서버4.png" target="_blank"><img loading="lazy" src="assets/activity/포켓몬서버4.png" alt="포켓몬서버4"></a><figcaption>포켓몬서버4</figcaption></figure><figure class="photo-card"><a href="assets/activity/포켓몬서버5.png" target="_blank"><img loading="lazy" src="assets/activity/포켓몬서버5.png" alt="포켓몬서버5"></a><figcaption>포켓몬서버5</figcaption></figure>
+        </div></details></section>
+        <section class="activity-group"><h2>스터디와 강의 <span>사진 이름별 정리</span></h2><div class="photo-grid">
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/강의.jpg" alt="강의"><figcaption>강의<small>강의 · 강의2~4</small></figcaption></figure>
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/논문읽기스터디.jpg" alt="논문 읽기 스터디"><figcaption>논문 읽기 스터디<small>논문읽기스터디 · 논문읽기스터디2</small></figcaption></figure>
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/서버개발 스터디.png" alt="서버 개발 스터디"><figcaption>서버 개발 스터디<small>서버개발 스터디</small></figcaption></figure>
+        </div><details class="photo-more"><summary>추가 사진 보기 · 4장</summary><div class="photo-grid">
+          <figure class="photo-card"><a href="assets/activity/강의2.jpg" target="_blank"><img loading="lazy" src="assets/activity/강의2.jpg" alt="강의2"></a><figcaption>강의2</figcaption></figure><figure class="photo-card"><a href="assets/activity/강의3.jpg" target="_blank"><img loading="lazy" src="assets/activity/강의3.jpg" alt="강의3"></a><figcaption>강의3</figcaption></figure><figure class="photo-card"><a href="assets/activity/강의4.jpg" target="_blank"><img loading="lazy" src="assets/activity/강의4.jpg" alt="강의4"></a><figcaption>강의4</figcaption></figure><figure class="photo-card"><a href="assets/activity/논문읽기스터디2.jpg" target="_blank"><img loading="lazy" src="assets/activity/논문읽기스터디2.jpg" alt="논문읽기스터디2"></a><figcaption>논문읽기스터디2</figcaption></figure>
+        </div></details></section>
+        <section class="activity-group"><h2>대외활동과 행사 <span>사진 이름별 정리</span></h2><div class="photo-grid">
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/LG전자.jpg" alt="LG전자 활동"><figcaption>LG전자<small>LG전자</small></figcaption></figure>
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/gamejam-hackathon.jpg" alt="&#xAC8C;&#xC784;&#xC7BC; &#xD574;&#xCEE4;&#xD1A4;"><figcaption>&#xAC8C;&#xC784;&#xC7BC; &#xD574;&#xCEE4;&#xD1A4;</figcaption></figure>
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/경북해커톤수상.jpg" alt="경북 해커톤 수상"><figcaption>경북 해커톤 수상<small>경북해커톤수상 · 경북해커톤수상2</small></figcaption></figure>
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/마인크래프트 입학식.png" alt="마인크래프트 입학식"><figcaption>마인크래프트 입학식<small>마인크래프트 입학식</small></figcaption></figure>
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/메타버스입학식.jpg" alt="메타버스 입학식"><figcaption>메타버스 입학식<small>메타버스입학식</small></figcaption></figure>
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/학교행사참여.jpg" alt="학교 행사 참여"><figcaption>학교 행사 참여<small>학교행사참여 · 학교행사참여2</small></figcaption></figure>
+        </div><details class="photo-more"><summary>추가 사진 보기 · 2장</summary><div class="photo-grid">
+          <figure class="photo-card"><a href="assets/activity/경북해커톤수상2.jpg" target="_blank"><img loading="lazy" src="assets/activity/경북해커톤수상2.jpg" alt="경북해커톤수상2"></a><figcaption>경북해커톤수상2</figcaption></figure><figure class="photo-card"><a href="assets/activity/학교행사참여2.jpg" target="_blank"><img loading="lazy" src="assets/activity/학교행사참여2.jpg" alt="학교행사참여2"></a><figcaption>학교행사참여2</figcaption></figure>
+        </div></details></section>
+        <section class="activity-group"><h2>친목활동 <span>사진 이름별 정리</span></h2><div class="photo-grid">
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/여름MT.jpg" alt="여름 MT"><figcaption>여름 MT<small>여름MT · MT2 · MT3</small></figcaption></figure>
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/조모임.jpg" alt="조모임"><figcaption>조모임<small>조모임</small></figcaption></figure>
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/친목활동.jpg" alt="친목 활동"><figcaption>친목 활동<small>친목활동 · 친목활동2</small></figcaption></figure>
+          <figure class="photo-card"><img loading="lazy" src="assets/activity/회식.jpg" alt="회식"><figcaption>회식<small>회식</small></figcaption></figure>
+        </div><details class="photo-more"><summary>추가 사진 보기 · 3장</summary><div class="photo-grid">
+          <figure class="photo-card"><a href="assets/activity/MT2.png" target="_blank"><img loading="lazy" src="assets/activity/MT2.png" alt="MT2"></a><figcaption>MT2</figcaption></figure><figure class="photo-card"><a href="assets/activity/MT3.png" target="_blank"><img loading="lazy" src="assets/activity/MT3.png" alt="MT3"></a><figcaption>MT3</figcaption></figure><figure class="photo-card"><a href="assets/activity/친목활동2.png" target="_blank"><img loading="lazy" src="assets/activity/친목활동2.png" alt="친목활동2"></a><figcaption>친목활동2</figcaption></figure>
+        </div></details></section>
+        <section class="activity-group settlement-group"><h2>&#xC6D4;&#xAC04; &#xACB0;&#xC0B0;</h2><div class="photo-grid"><figure class="photo-card settlement-card"><img loading="lazy" src="assets/activity/summary-april-1.jpg" alt="YUMC &#xC6D4;&#xAC04; &#xACB0;&#xC0B0;"><figcaption>&#xC6D4;&#xAC04; &#xACB0;&#xC0B0;<small>4&#xC6D4;&#xB7;5&#xC6D4; &#xAE30;&#xB85D;</small></figcaption></figure></div><details class="photo-more"><div class="photo-grid"><figure class="photo-card"><img loading="lazy" src="assets/activity/summary-april-2.jpg" alt="4&#xC6D4; &#xACB0;&#xC0B0; 2"></figure><figure class="photo-card"><img loading="lazy" src="assets/activity/summary-april-3.jpg" alt="4&#xC6D4; &#xACB0;&#xC0B0; 3"></figure><figure class="photo-card"><img loading="lazy" src="assets/activity/summary-april-4.jpg" alt="4&#xC6D4; &#xACB0;&#xC0B0; 4"></figure><figure class="photo-card"><img loading="lazy" src="assets/activity/summary-april-5.jpg" alt="4&#xC6D4; &#xACB0;&#xC0B0; 5"></figure><figure class="photo-card"><img loading="lazy" src="assets/activity/summary-april-6.jpg" alt="4&#xC6D4; &#xACB0;&#xC0B0; 6"></figure><figure class="photo-card"><img loading="lazy" src="assets/activity/summary-may-1.jpg" alt="5&#xC6D4; &#xACB0;&#xC0B0; 1"></figure><figure class="photo-card"><img loading="lazy" src="assets/activity/summary-may-2.jpg" alt="5&#xC6D4; &#xACB0;&#xC0B0; 2"></figure><figure class="photo-card"><img loading="lazy" src="assets/activity/summary-may-3.jpg" alt="5&#xC6D4; &#xACB0;&#xC0B0; 3"></figure><figure class="photo-card"><img loading="lazy" src="assets/activity/summary-may-4.jpg" alt="5&#xC6D4; &#xACB0;&#xC0B0; 4"></figure><figure class="photo-card"><img loading="lazy" src="assets/activity/summary-may-5.jpg" alt="5&#xC6D4; &#xACB0;&#xC0B0; 5"></figure></div></details></section>
+      </div>
+    </section>
+    <section class="page" data-page="officers"><div class="kicker">03 / OFFICERS</div><h1>&#xC784;&#xC6D0;&#xC9C4;</h1><p class="lead">2026&#xB144; &#xAE30;&#xC900; YUMC&#xC758; &#xD604;&#xC7AC; &#xD68C;&#xC7A5;&#xC740; 4&#xB300; &#xD68C;&#xC7A5; &#xD64D;&#xC8FC;&#xC740;&#xB2D8;&#xC785;&#xB2C8;&#xB2E4;.</p><div class="grid"><article class="card"><h2>1&#xB300; &#xD68C;&#xC7A5;</h2><p>&#xC11C;&#xC2B9;&#xC644;&#xB2D8;</p></article><article class="card"><h2>2&#xB300; &#xD68C;&#xC7A5;</h2><p>&#xB958;&#xB3D9;&#xC724;&#xB2D8;</p></article><article class="card"><h2>3&#xB300; &#xD68C;&#xC7A5;</h2><p>&#xAE40;&#xBBFC;&#xC7AC;&#xB2D8;</p></article><article class="card"><h2>4&#xB300;&#xB7;&#xD604;&#xC7AC; &#xD68C;&#xC7A5;</h2><p>&#xD64D;&#xC8FC;&#xC740;&#xB2D8;</p></article></div></section>
+    <section class="page" data-page="location"><div class="kicker">04 / LOCATION</div><h1>&#xB3D9;&#xC544;&#xB9AC;&#xBC29; &#xC704;&#xCE58;</h1><p class="lead">YUMC &#xB3D9;&#xC544;&#xB9AC;&#xBC29;&#xC740; &#xC601;&#xB0A8;&#xB300;&#xD559;&#xAD50; &#xB178;&#xCC9C;&#xAC15;&#xB2F9; 214&#xD638;&#xC5D0; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p><div class="box"><h2>&#xC8FC;&#xC18C;</h2><p>&#xACBD;&#xC0C1;&#xBD81;&#xB3C4; &#xACBD;&#xC0B0;&#xC2DC; &#xB300;&#xD559;&#xB85C; 280, &#xC601;&#xB0A8;&#xB300;&#xD559;&#xAD50; &#xB178;&#xCC9C;&#xAC15;&#xB2F9; 214&#xD638;</p></div></section>
+  </main>
+  <dialog id="gallery" class="gallery-dialog" aria-label="활동 사진 갤러리">
+    <div class="gallery-stage">
+      <div class="gallery-media">
+        <button class="gallery-close" type="button" aria-label="갤러리 닫기">×</button>
+        <button class="gallery-nav gallery-prev" type="button" aria-label="이전 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15.5 5.5-7 6.5 7 6.5"/></svg></button>
+        <img id="gallery-image" alt="">
+        <button class="gallery-nav gallery-next" type="button" aria-label="다음 사진"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 5.5 7 6.5-7 6.5"/></svg></button>
+      </div>
+      <div class="gallery-title"><strong id="gallery-name"></strong><span id="gallery-count"></span></div>
+    </div>
+  </dialog>
+  <script>
+    const body = document.body, pages = document.querySelectorAll('.page');
+    const showPage = () => { const key = location.hash.slice(1) || 'about'; let found = false; pages.forEach(page => { const active = page.dataset.page === key; page.classList.toggle('active', active); found ||= active; }); if (!found) { location.hash = 'about'; return; } document.title = pages[Array.from(pages).findIndex(page => page.dataset.page === key)].querySelector('h1').textContent + ' | YUMC'; };
+    const theme = document.querySelector('.theme');
+    document.querySelectorAll('.photo-more a').forEach(link => link.rel = 'noopener');
+    const gallery = document.querySelector('#gallery');
+    const galleryImage = document.querySelector('#gallery-image');
+    const galleryName = document.querySelector('#gallery-name');
+    const galleryCount = document.querySelector('#gallery-count');
+    const settlement = document.querySelector('.settlement-group');
+    if (settlement) {
+      const images = Array.from(settlement.querySelectorAll('img'));
+      const makeSettlement = (title, start, end) => {
+        const section = document.createElement('section');
+        section.className = 'activity-group settlement-group';
+        section.innerHTML = `<h2>${title}</h2><div class="photo-grid"></div>`;
+        const grid = section.querySelector('.photo-grid');
+        images.slice(start, end).forEach((image, index) => {
+          const figure = document.createElement('figure');
+          figure.className = 'photo-card';
+          figure.append(image.cloneNode(true));
+          const caption = document.createElement('figcaption');
+          caption.textContent = `${title} ${index + 1}`;
+          figure.append(caption);
+          grid.append(figure);
+        });
+        return section;
+      };
+      settlement.classList.add('settlement-container');
+      settlement.innerHTML = '<h2>결산</h2><div class="photo-grid settlement-cards"></div>';
+      const grid = settlement.querySelector('.settlement-cards');
+      [['5월 결산', 6], ['4월 결산', 0]].forEach(([title, imageIndex]) => {
+        const figure = document.createElement('figure');
+        figure.className = 'photo-card';
+        figure.append(images[imageIndex].cloneNode(true));
+        const caption = document.createElement('figcaption');
+        caption.textContent = title;
+        figure.append(caption);
+        grid.append(figure);
+      });
+      const settlementExtras = document.createElement('div');
+      settlementExtras.className = 'photo-more';
+      [...images.slice(7, 11), ...images.slice(1, 6)].forEach(image => settlementExtras.append(image.cloneNode(true)));
+      settlement.append(settlementExtras);
+    }
+    const activityGroups = Array.from(document.querySelectorAll('.activity-group'));
+    const extraRanges = [
+      [[0, 6], [6, 9], [9, 13]],
+      [[0, 3], [3, 4], [4, 4]],
+      [[0, 0], [0, 0], [0, 1], [1, 1], [1, 1], [1, 2]],
+      [[0, 2], [2, 2], [2, 3], [3, 3]],
+      [[0, 4], [4, 9]]
+    ];
+    let galleryPhotos = [], galleryIndex = 0;
+    const drawGallery = () => {
+      galleryImage.src = galleryPhotos[galleryIndex];
+      galleryImage.alt = `${galleryName.textContent} ${galleryIndex + 1}`;
+      galleryCount.textContent = `${galleryIndex + 1} / ${galleryPhotos.length}`;
+    };
+    const moveGallery = amount => { galleryIndex = (galleryIndex + amount + galleryPhotos.length) % galleryPhotos.length; drawGallery(); };
+    activityGroups.forEach((group, groupIndex) => {
+      const cards = Array.from(group.querySelectorAll(':scope > .photo-grid > .photo-card'));
+      const extras = Array.from(group.querySelectorAll('.photo-more img')).map(image => image.src);
+      cards.forEach((card, cardIndex) => {
+        const [from, to] = extraRanges[groupIndex]?.[cardIndex] || [0, 0];
+        const caption = card.querySelector('figcaption');
+        const photoCount = caption.querySelector('small') || document.createElement('small');
+        if (!photoCount.parentElement) caption.append(photoCount);
+        photoCount.textContent = `사진 ${to - from + 1}장`;
+        card.classList.add('gallery-trigger');
+        card.tabIndex = 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', '사진 크게 보기');
+        const openGallery = () => {
+          galleryPhotos = [card.querySelector('img').src, ...extras.slice(from, to)];
+          galleryIndex = 0;
+          galleryName.textContent = card.querySelector('figcaption').firstChild.textContent.trim();
+          drawGallery();
+          gallery.showModal();
+        };
+        card.addEventListener('click', openGallery);
+        card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openGallery(); } });
+      });
+    });
+    activityGroups[1].querySelector('h2').firstChild.textContent = '스터디';
+    [['강의.jpg', '파이썬 스터디'], ['논문읽기', '논문 스터디'], ['서버개발', '서버개발 스터디'], ['여름MT', 'MT']].forEach(([file, title]) => { const caption = document.querySelector(`.photo-card img[src*="${file}"]`)?.closest('.photo-card')?.querySelector('figcaption'); if (caption) caption.firstChild.textContent = title; });
+    document.querySelector('.gallery-close').onclick = () => gallery.close();
+    document.querySelector('.gallery-prev').onclick = () => moveGallery(-1);
+    document.querySelector('.gallery-next').onclick = () => moveGallery(1);
+    gallery.addEventListener('click', event => { if (event.target === gallery) gallery.close(); });
+    addEventListener('keydown', event => { if (!gallery.open) return; if (event.key === 'ArrowLeft') moveGallery(-1); if (event.key === 'ArrowRight') moveGallery(1); });
+    const updateTheme = () => { const dark = body.classList.contains('dark'); theme.textContent = dark ? '화이트' : '블랙'; theme.setAttribute('aria-label', dark ? '화이트 모드로 전환' : '블랙 모드로 전환'); };
+    body.classList.toggle('dark', localStorage.getItem('yumc-theme') !== 'light'); updateTheme();
+    theme.onclick = () => { body.classList.toggle('dark'); localStorage.setItem('yumc-theme', body.classList.contains('dark') ? 'dark' : 'light'); updateTheme(); };
+    const officersPage = document.querySelector('[data-page="officers"]');
+    officersPage.querySelector('.lead').innerHTML = '2026&#xB144; YUMC &#xC784;&#xC6D0;&#xC9C4;&#xC785;&#xB2C8;&#xB2E4;.';
+    officersPage.querySelector('.grid').remove();
+    officersPage.querySelector('.lead').insertAdjacentHTML('afterend', '<div class="officer-layout" aria-label="2026 임원진"><section class="officer-section"><h2>OPERATIONS</h2><div class="role-board core"><span><b>&#xD68C;&#xC7A5;</b><small>&#xD64D;&#xC8FC;&#xC740;</small></span><span><b>&#xBD80;&#xD68C;&#xC7A5;</b><small>&#xAE40;&#xACBD;&#xBBFC;</small></span><span><b>&#xCD1D;&#xBB34;</b><small>&#xCD5C;&#xC740;&#xC81C;</small></span></div></section><section class="officer-section"><h2>TEAMS</h2><div class="role-board"><span><b>&#xAE30;&#xD68D;</b><small>&#xBC15;&#xC6B0;&#xC131; · &#xAE40;&#xD604;&#xC601;</small></span><span><b>&#xD64D;&#xBCF4;</b><small>&#xCC28;&#xD0DC;&#xC758; · &#xAE40;&#xB3D9;&#xD5CC;</small></span><span><b>&#xC624;&#xB77D;</b><small>&#xC774;&#xC900;&#xD638; · &#xC6B0;&#xD6A8;&#xBE48;</small></span><span><b>&#xAC1C;&#xBC1C;</b><small>&#xAE40;&#xBBFC;&#xC7AC; · &#xC11C;&#xC7AC;&#xC6A9;<br>&#xC8FC;&#xC131;&#xBE48; · &#xC131;&#xC7AC;&#xC11D; · &#xAE40;&#xAC74;&#xC601;</small></span></div></section></div>');
+    officersPage.querySelectorAll('.officer-section h2')[0].innerHTML = '&#xC6B4;&#xC601;&#xC9C4;';
+    officersPage.querySelectorAll('.officer-section h2')[1].innerHTML = '&#xD30C;&#xD2B8;';
+    officersPage.querySelector('.officer-layout').remove();
+    officersPage.querySelector('.lead').insertAdjacentHTML('afterend', '<div class="officer-directory" aria-label="2026 임원진 명단"><div class="directory-head"><span>&#xC9C1;&#xCC45;</span><span>&#xC774;&#xB984;</span></div><div><b>&#xD68C;&#xC7A5;</b><span>&#xD64D;&#xC8FC;&#xC740;</span></div><div><b>&#xBD80;&#xD68C;&#xC7A5;</b><span>&#xAE40;&#xACBD;&#xBBFC;</span></div><div><b>&#xCD1D;&#xBB34;</b><span>&#xCD5C;&#xC740;&#xC81C;</span></div><div><b>&#xAE30;&#xD68D;</b><span>&#xBC15;&#xC6B0;&#xC131; · &#xAE40;&#xD604;&#xC601;</span></div><div><b>&#xD64D;&#xBCF4;</b><span>&#xCC28;&#xD0DC;&#xC758; · &#xAE40;&#xB3D9;&#xD5CC;</span></div><div><b>&#xC624;&#xB77D;</b><span>&#xC774;&#xC900;&#xD638; · &#xC6B0;&#xD6A8;&#xBE48;</span></div><div><b>&#xAC1C;&#xBC1C;</b><span>&#xAE40;&#xBBFC;&#xC7AC; · &#xC11C;&#xC7AC;&#xC6A9; · &#xC8FC;&#xC131;&#xBE48; · &#xC131;&#xC7AC;&#xC11D; · &#xAE40;&#xAC74;&#xC601;</span></div></div>');
+    officersPage.querySelector('.officer-directory').remove();
+    officersPage.querySelector('.lead').insertAdjacentHTML('afterend', '<div class="org-chart" aria-label="2026 임원진 조직도"><div class="org-node"><b>&#xD68C;&#xC7A5;</b><span>&#xD64D;&#xC8FC;&#xC740;</span></div><i class="org-link"></i><div class="org-row core"><div class="org-node"><b>&#xBD80;&#xD68C;&#xC7A5;</b><span>&#xAE40;&#xACBD;&#xBBFC;</span></div><div class="org-node"><b>&#xCD1D;&#xBB34;</b><span>&#xCD5C;&#xC740;&#xC81C;</span></div></div><i class="org-link"></i><div class="org-row teams"><div class="org-node"><b>&#xAE30;&#xD68D;</b><span>&#xBC15;&#xC6B0;&#xC131; · &#xAE40;&#xD604;&#xC601;</span></div><div class="org-node"><b>&#xD64D;&#xBCF4;</b><span>&#xCC28;&#xD0DC;&#xC758; · &#xAE40;&#xB3D9;&#xD5CC;</span></div><div class="org-node"><b>&#xC624;&#xB77D;</b><span>&#xC774;&#xC900;&#xD638; · &#xC6B0;&#xD6A8;&#xBE48;</span></div><div class="org-node"><b>&#xAC1C;&#xBC1C;</b><span>&#xAE40;&#xBBFC;&#xC7AC; · &#xC11C;&#xC7AC;&#xC6A9;<br>&#xC8FC;&#xC131;&#xBE48; · &#xC131;&#xC7AC;&#xC11D; · &#xAE40;&#xAC74;&#xC601;</span></div></div></div>');
+    const coreRow = officersPage.querySelector('.org-row.core');
+    const [vicePresident, treasurer] = coreRow.querySelectorAll('.org-node');
+    const viceToTreasurer = document.createElement('i');
+    viceToTreasurer.className = 'org-link';
+    coreRow.replaceWith(vicePresident, viceToTreasurer, treasurer);
+    const teamRow = officersPage.querySelector('.org-row.teams');
+    viceToTreasurer.remove();
+    treasurer.remove();
+    teamRow.append(treasurer);
+    const alignOrgLines = () => officersPage.querySelectorAll('.org-row').forEach(row => { const cards = row.querySelectorAll('.org-node'); const rowBox = row.getBoundingClientRect(); const first = cards[0].getBoundingClientRect(); const last = cards[cards.length - 1].getBoundingClientRect(); row.style.setProperty('--line-left', `${first.left + first.width / 2 - rowBox.left}px`); row.style.setProperty('--line-right', `${rowBox.right - last.left - last.width / 2}px`); });
+    addEventListener('resize', alignOrgLines);
+    addEventListener('hashchange', () => { showPage(); requestAnimationFrame(alignOrgLines); });
+    showPage(); requestAnimationFrame(alignOrgLines);
+  </script>
+</body>
+</html>
